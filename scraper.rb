@@ -1,12 +1,8 @@
 #!/bin/env ruby
 # encoding: utf-8
 
-require 'rest-client'
-require 'scraperwiki'
 require 'wikidata/fetcher'
 require 'nokogiri'
-require 'colorize'
-require 'pry'
 require 'open-uri/cached'
 OpenURI::Cache.cache_path = '.cache'
 
@@ -27,19 +23,5 @@ def wikinames_from(url)
   return names
 end
 
-def fetch_info(names)
-  WikiData.ids_from_pages('pt', names).each do |name, id|
-    data = WikiData::Fetcher.new(id: id).data('pt') rescue nil
-    unless data
-      warn "No data for #{p}"
-      next
-    end
-    data[:original_wikiname] = name
-    ScraperWiki.save_sqlite([:id], data)
-  end
-end
-
-fetch_info wikinames_from('https://pt.wikipedia.org/wiki/Lista_de_deputados_federais_do_Brasil_da_55.%C2%AA_legislatura')
-
-warn RestClient.post ENV['MORPH_REBUILDER_URL'], {} if ENV['MORPH_REBUILDER_URL']
-
+names = wikinames_from('https://pt.wikipedia.org/wiki/Lista_de_deputados_federais_do_Brasil_da_55.ª_legislatura')
+EveryPolitician::Wikidata.scrape_wikidata(names: { pt: names.flatten.uniq })
