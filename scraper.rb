@@ -2,26 +2,40 @@
 # encoding: utf-8
 
 require 'wikidata/fetcher'
-require 'nokogiri'
-require 'open-uri/cached'
-OpenURI::Cache.cache_path = '.cache'
 
+directora_55 = EveryPolitician::Wikidata.wikipedia_xpath( 
+  url: 'https://pt.wikipedia.org/wiki/Lista_de_deputados_federais_do_Brasil_da_55.ª_legislatura',
+  after: '//span[@id="Mesa_Diretora"]',
+  before: '//span[@id=".C2.A0Acre"]',
+  xpath: '//table//td[3]//a[not(@class="new")]/@title',
+) 
 
-def noko_for(url)
-  Nokogiri::HTML(open(URI.escape(URI.unescape(url))).read) 
-end
+by_area_55 = EveryPolitician::Wikidata.wikipedia_xpath( 
+  url: 'https://pt.wikipedia.org/wiki/Lista_de_deputados_federais_do_Brasil_da_55.ª_legislatura',
+  after: '//span[@id=".C2.A0Acre"]',
+  before: '//span[@id="Licen.C3.A7as"]',
+  xpath: '//table//td[1]//a[not(@class="new")]/@title',
+) 
 
-def wikinames_from(url)
-  noko = noko_for(url)
-  noko.css('#Mesa_Diretora_2').xpath('following::*').remove
-  
-  names = noko.xpath('//table//th[contains(.,"Nome")]').map do |th|
-    wantcol = th.xpath("ancestor::tr").last.css('th').find_index { |th| th.text.to_s.include? 'Nome' }
-    th.xpath("ancestor::table").last.xpath(".//td[#{wantcol + 1}]//a[not(@class='new')]/@title").map { |t| t.text }
-  end
-  raise "No names found in #{url}" if names.count.zero?
-  return names
-end
+licencas_55 = EveryPolitician::Wikidata.wikipedia_xpath( 
+  url: 'https://pt.wikipedia.org/wiki/Lista_de_deputados_federais_do_Brasil_da_55.ª_legislatura',
+  after: '//span[@id="Licen.C3.A7as"]',
+  before: '//span[@id="Afastados"]',
+  xpath: '//table//td[2]//a[not(@class="new")]/@title',
+) 
 
-names = wikinames_from('https://pt.wikipedia.org/wiki/Lista_de_deputados_federais_do_Brasil_da_55.ª_legislatura')
-EveryPolitician::Wikidata.scrape_wikidata(names: { pt: names.flatten.uniq })
+directora_54 = EveryPolitician::Wikidata.wikipedia_xpath( 
+  url: 'https://pt.wikipedia.org/wiki/Lista_de_deputados_federais_do_Brasil_da_54.ª_legislatura',
+  after: '//span[@id="Mesa_Diretora"]',
+  before: '//span[@id=".C2.A0Acre"]',
+  xpath: '//table//td[3]//a[not(@class="new")]/@title',
+) 
+
+by_area_54 = EveryPolitician::Wikidata.wikipedia_xpath( 
+  url: 'https://pt.wikipedia.org/wiki/Lista_de_deputados_federais_do_Brasil_da_54.ª_legislatura',
+  after: '//span[@id=".C2.A0Acre"]',
+  before: '//span[@id="Licen.C3.A7as"]',
+  xpath: '//table//td[1]//a[not(@class="new")]/@title',
+) 
+
+EveryPolitician::Wikidata.scrape_wikidata(names: { pt: directora_55 | by_area_55 | licencas_55 | directora_54 | by_area_54 })
