@@ -20,7 +20,7 @@ by_area_55 = EveryPolitician::Wikidata.wikipedia_xpath(
 licencas_55 = EveryPolitician::Wikidata.wikipedia_xpath( 
   url: 'https://pt.wikipedia.org/wiki/Lista_de_deputados_federais_do_Brasil_da_55.ª_legislatura',
   after: '//span[@id="Licen.C3.A7as"]',
-  before: '//span[@id="Afastados"]',
+  before: '//span[@id="Ver_tamb.C3.A9m"]',
   xpath: '//table//td[2]//a[not(@class="new")]/@title',
 ) 
 
