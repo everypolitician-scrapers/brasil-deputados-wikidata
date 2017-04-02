@@ -38,4 +38,19 @@ by_area_54 = EveryPolitician::Wikidata.wikipedia_xpath(
   xpath: '//table//td[1]//a[not(@class="new")]/@title',
 )
 
-EveryPolitician::Wikidata.scrape_wikidata(names: { pt: directora_55 | by_area_55 | licencas_55 | directora_54 | by_area_54 })
+# Find all P39s of the 54th & 55th Term
+query = <<EOS
+  SELECT DISTINCT ?item
+  WHERE
+  {
+    VALUES ?membership { wd:Q20058725 }
+    VALUES ?term { wd:Q4640499 wd:Q18479094 }
+
+    ?item p:P39 ?position_statement .
+    ?position_statement ps:P39 ?membership .
+    ?position_statement pq:P2937 ?term .
+  }
+EOS
+p39s = EveryPolitician::Wikidata.sparql(query)
+
+EveryPolitician::Wikidata.scrape_wikidata(ids: p39s, names: { pt: directora_55 | by_area_55 | licencas_55 | directora_54 | by_area_54 })
