@@ -5,7 +5,7 @@ require 'wikidata/fetcher'
 
 directora_55 = EveryPolitician::Wikidata.wikipedia_xpath(
   url: 'https://pt.wikipedia.org/wiki/Lista_de_deputados_federais_do_Brasil_da_55.ª_legislatura',
-  after: '//span[@id="Mesa_Diretora"]',
+  after: '//span[@id="Mesa_diretora"]',
   before: '//span[@id=".C2.A0Acre"]',
   xpath: '//table//td[3]//a[not(@class="new")]/@title',
 )
