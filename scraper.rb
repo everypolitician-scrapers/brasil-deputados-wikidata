@@ -6,35 +6,35 @@ require 'wikidata/fetcher'
 directora_55 = EveryPolitician::Wikidata.wikipedia_xpath(
   url: 'https://pt.wikipedia.org/wiki/Lista_de_deputados_federais_do_Brasil_da_55.ª_legislatura',
   after: '//span[@id="Mesa_diretora"]',
-  before: '//span[@id=".C2.A0Acre"]',
+  before: '//span[@id="Por_unidade_da_federação"]',
   xpath: '//table//td[3]//a[not(@class="new")]/@title',
 )
 
 by_area_55 = EveryPolitician::Wikidata.wikipedia_xpath(
   url: 'https://pt.wikipedia.org/wiki/Lista_de_deputados_federais_do_Brasil_da_55.ª_legislatura',
-  after: '//span[@id=".C2.A0Acre"]',
-  before: '//span[@id="Licen.C3.A7as"]',
+  after: '//span[@id="Por_unidade_da_federação"]',
+  before: '//span[@id="Renúncias"]',
   xpath: '//table//td[1]//a[not(@class="new")]/@title',
 )
 
 licencas_55 = EveryPolitician::Wikidata.wikipedia_xpath(
   url: 'https://pt.wikipedia.org/wiki/Lista_de_deputados_federais_do_Brasil_da_55.ª_legislatura',
-  after: '//span[@id="Licen.C3.A7as"]',
-  before: '//span[@id="Ver_tamb.C3.A9m"]',
+  after: '//span[@id="Renúncias"]',
+  before: '//span[@id="Ver_também"]',
   xpath: '//table//td[2]//a[not(@class="new")]/@title',
 )
 
 directora_54 = EveryPolitician::Wikidata.wikipedia_xpath(
   url: 'https://pt.wikipedia.org/wiki/Lista_de_deputados_federais_do_Brasil_da_54.ª_legislatura',
   after: '//span[@id="Mesa_Diretora"]',
-  before: '//span[@id=".C2.A0Acre"]',
+  before: '//span[@id="_Acre"]',
   xpath: '//table//td[3]//a[not(@class="new")]/@title',
 )
 
 by_area_54 = EveryPolitician::Wikidata.wikipedia_xpath(
   url: 'https://pt.wikipedia.org/wiki/Lista_de_deputados_federais_do_Brasil_da_54.ª_legislatura',
-  after: '//span[@id=".C2.A0Acre"]',
-  before: '//span[@id="Licen.C3.A7as"]',
+  after: '//span[@id="_Acre"]',
+  before: '//span[@id="Licenças"]',
   xpath: '//table//td[1]//a[not(@class="new")]/@title',
 )
 
