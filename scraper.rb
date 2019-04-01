@@ -40,15 +40,9 @@ by_area_54 = EveryPolitician::Wikidata.wikipedia_xpath(
 
 # Find all P39s of the 54th & 55th Term
 query = <<EOS
-  SELECT DISTINCT ?item
-  WHERE
-  {
-    VALUES ?membership { wd:Q20058725 }
-    VALUES ?term { wd:Q4640499 wd:Q18479094 }
-
-    ?item p:P39 ?position_statement .
-    ?position_statement ps:P39 ?membership .
-    ?position_statement pq:P2937 ?term .
+  SELECT DISTINCT ?item WHERE {
+    ?item p:P39 [ ps:P39/wdt:P279* wd:Q20058725 ; pq:P2937 ?term ].
+    ?term p:P31/pq:P1545 ?ordinal FILTER (xsd:integer(?ordinal) >= 54)
   }
 EOS
 p39s = EveryPolitician::Wikidata.sparql(query)
